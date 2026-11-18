@@ -14,3 +14,24 @@ document.querySelectorAll('.nav-link').forEach(link => {
   });
 });
 document.getElementById('year').textContent = new Date().getFullYear();
+const reviewWheel = document.querySelector(".review-scroll-wheel");
+const reviewContainer = document.querySelector(".reviews-container");
+
+if (reviewWheel && reviewContainer) {
+  reviewWheel.addEventListener("input", () => {
+    const maxScroll =
+      reviewContainer.scrollHeight - reviewContainer.clientHeight;
+
+    reviewContainer.scrollTop =
+      (Number(reviewWheel.value) / 100) * maxScroll;
+  });
+
+  reviewContainer.addEventListener("scroll", () => {
+    const maxScroll =
+      reviewContainer.scrollHeight - reviewContainer.clientHeight;
+
+    reviewWheel.value = maxScroll > 0
+      ? (reviewContainer.scrollTop / maxScroll) * 100
+      : 0;
+  });
+}
